@@ -136,15 +136,26 @@
         </button>
       </div>
 
-      <!-- GANTT CHART SECTION -->
+      <!-- Main Content: Timeline (left) + Tasks (right) -->
+      <!-- TIMELINE VIEW with Tasks Tab -->
       <div class="mb-8">
         <div class="flex items-center justify-between mb-4">
-          <h3 class="text-2xl font-semibold flex items-center gap-3">
-            <i class="fas fa-chart-bar text-blue-400"></i> 
-            TIMELINE VIEW
-          </h3>
+          <div class="flex items-center gap-4">
+            <h3 class="text-2xl font-semibold flex items-center gap-3">
+              <i class="fas fa-chart-bar text-blue-400"></i> 
+              TIMELINE VIEW
+            </h3>
 
-          <!-- Hashtags positioned above the time range tabs (tilted + bold + floating) -->
+            <!-- Tabs: Timeline / Tasks View -->
+            <div class="flex bg-gray-800 rounded-2xl p-1 text-sm">
+              <button onclick="switchToTimelineView()" id="tab-timeline"
+                      class="px-5 py-1.5 rounded-2xl bg-white text-black font-medium">Timeline</button>
+              <button onclick="switchToTasksView()" id="tab-tasks"
+                      class="px-5 py-1.5 rounded-2xl hover:bg-gray-700">Tasks View</button>
+            </div>
+          </div>
+
+          <!-- Hashtags -->
           <div class="flex gap-3 justify-end mb-2 pr-1" id="hashtags-container">
             <span id="hashtag1" 
                   class="px-4 py-0.5 text-xl font-bold tracking-[2.5px] text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] cursor-pointer select-none transform skew-x-[-7deg] hover:scale-105 active:scale-95 transition-all duration-200"
@@ -160,7 +171,7 @@
           </div>
           
           <!-- Time Range Filters -->
-          <div class="flex bg-gray-900 rounded-2xl p-1 border border-gray-800">
+          <div class="flex bg-gray-900 rounded-2xl p-1 border border-gray-800" id="timeline-filters">
             <button onclick="setTimelineRange(14)" class="px-4 py-2 text-sm rounded-2xl hover:bg-gray-800 transition-all" id="btn-14">2 Weeks</button>
             <button onclick="setTimelineRange(30)" class="px-4 py-2 text-sm rounded-2xl hover:bg-gray-800 transition-all" id="btn-30">1 Month</button>
             <button onclick="setTimelineRange(90)" class="px-4 py-2 text-sm rounded-2xl hover:bg-gray-800 transition-all" id="btn-90">3 Months</button>
@@ -169,16 +180,36 @@
           </div>
         </div>
 
-        <!-- Gantt Chart Container -->
-        <div class="bg-gray-900/70 glass rounded-3xl p-6 border border-gray-800">
-          <div id="gantt-container" class="overflow-x-auto" style="max-width: 100%;">
-            <!-- Gantt chart will be rendered here by JavaScript -->
+        <!-- Dynamic Content: Timeline or Tasks -->
+        <div id="main-content-area">
+          <!-- Timeline Content (default visible) -->
+          <div id="timeline-content">
+            <div class="bg-gray-900/70 glass rounded-3xl p-6 border border-gray-800">
+              <div id="gantt-container" class="overflow-x-auto" style="max-width: 100%;">
+                <!-- Gantt chart will be rendered here -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Tasks View Content (hidden by default) -->
+          <div id="tasks-content" class="hidden">
+            <div class="bg-gray-900/70 glass rounded-3xl p-6 border border-gray-800">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold flex items-center gap-2 text-lg">
+                  <i class="fas fa-tasks text-emerald-400"></i> All Tasks
+                </h3>
+                <button onclick="renderTasksView()" class="text-xs px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-xl">Refresh</button>
+              </div>
+              <div id="tasks-list-content" class="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[65vh] overflow-y-auto pr-2">
+                <!-- Tasks will be rendered here -->
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Regular Events List -->
-      <div class="grid grid-cols-1 xl:grid-cols-12 gap-6">
+      <!-- ACTIVE MISSIONS (Event Cards below Timeline) -->
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 mt-6">
         <div class="xl:col-span-12 bg-gray-900/70 glass rounded-3xl p-6 border border-gray-800">
           <h3 class="font-semibold mb-4 flex items-center gap-2">
             <i class="fas fa-list"></i> ACTIVE MISSIONS
@@ -253,6 +284,7 @@
         <div id="tasks-list" class="space-y-2 mb-4"></div>
         <div class="flex gap-2">
           <input id="new-task" placeholder="New task..." class="flex-1 bg-gray-800 rounded-2xl px-4 py-3">
+          <input id="new-task-owner" placeholder="Owner" value="Eric" class="w-32 bg-gray-800 rounded-2xl px-3 py-3 text-sm">
           <button onclick="addTask()" class="bg-emerald-600 px-6 rounded-2xl">Add</button>
         </div>
       </div>
@@ -427,10 +459,9 @@
         endDate.setHours(23, 59, 59, 999);
       }
 
-      // The Gantt timeline always considers ALL events.
-      // For short ranges (≤ 90 days), we look ahead up to 6 months for deadlines
-      // so that near-term deadlines from future events are not missed.
-      let filteredEvents = events;
+      // Apply the same sidebar filter to the Gantt timeline
+      // (so clicking WP4A, ITU WPs, Regional Preparation, etc. filters the timeline too)
+      const filteredEvents = getFilteredEvents();
 
       let deadlineLookupEnd = endDate;
       if (currentTimelineDays <= 90) {
@@ -1102,15 +1133,65 @@
       document.getElementById('detail-modal').classList.remove('hidden');
     }
 
+    function getOwnerColor(owner) {
+      if (!owner) return '#64748b';
+      // Gentle, consistent colors
+      const gentleColors = {
+        'Eric': '#60a5fa',      // soft blue
+        'Udri': '#a78bfa',      // soft purple
+        'Madeleine': '#f472b6', // soft pink
+        'Zahid': '#34d399',     // soft green
+        'Rohit': '#fbbf24',     // soft amber
+      };
+      if (gentleColors[owner]) return gentleColors[owner];
+
+      // Fallback gentle hash-based color
+      let hash = 0;
+      for (let i = 0; i < owner.length; i++) {
+        hash = owner.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      const hue = Math.abs(hash) % 360;
+      return `hsl(${hue}, 55%, 65%)`;
+    }
+
     function renderTasks() {
       const ev = events.find(e => e.id === currentEventId);
       const container = document.getElementById('tasks-list');
-      container.innerHTML = ev.tasks.map((task, i) => `
-        <div class="flex items-center gap-3 bg-gray-800 rounded-2xl p-3">
-          <input type="checkbox" ${task.done ? 'checked' : ''} onchange="toggleTask(${i})">
-          <span class="${task.done ? 'line-through text-gray-500' : ''}">${task.text}</span>
-        </div>
-      `).join('');
+      container.innerHTML = ev.tasks.map((task, i) => {
+        const ownerColor = task.owner ? getOwnerColor(task.owner) : '#64748b';
+        return `
+          <div class="flex items-center gap-3 bg-gray-800 rounded-2xl p-3">
+            <input type="checkbox" ${task.done ? 'checked' : ''} onchange="toggleTask(${i})">
+            <span class="${task.done ? 'line-through text-gray-500' : ''} flex-1">${task.text}</span>
+            
+            ${task.owner 
+              ? `<span onclick="event.stopImmediatePropagation(); editTaskOwner(${i})" 
+                       class="cursor-pointer px-2.5 py-0.5 text-xs text-white rounded-full hover:opacity-80" 
+                       style="background-color: ${ownerColor}">${task.owner}</span>` 
+              : ''}
+            
+            <button onclick="event.stopImmediatePropagation(); editTaskOwner(${i})" 
+                    class="text-gray-400 hover:text-white ml-1 text-xs">
+              <i class="fas fa-edit"></i>
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function editTaskOwner(taskIndex) {
+      const ev = events.find(e => e.id === currentEventId);
+      if (!ev || !ev.tasks[taskIndex]) return;
+
+      const currentOwner = ev.tasks[taskIndex].owner || "Eric";
+      const newOwner = prompt("Change owner for this task:", currentOwner);
+      
+      if (newOwner !== null && newOwner.trim() !== "") {
+        ev.tasks[taskIndex].owner = newOwner.trim();
+        saveToLocal();
+        renderTasks();           // refresh detail modal
+        renderTasksView();       // refresh main Tasks View if open
+      }
     }
 
     function renderDeadlines() {
@@ -1126,9 +1207,10 @@
 
     function addTask() {
       const text = document.getElementById('new-task').value.trim();
+      const owner = document.getElementById('new-task-owner').value.trim() || "Eric";
       if (!text) return;
       const ev = events.find(e => e.id === currentEventId);
-      ev.tasks.push({ text, done: false });
+      ev.tasks.push({ text, done: false, owner });
       saveToLocal();
       renderTasks();
       document.getElementById('new-task').value = '';
@@ -1157,19 +1239,17 @@
       renderAll();
     }
 
-    function renderEventsList() {
-      const container = document.getElementById('events-list');
+    // Reusable function to get filtered events based on sidebar selection
+    function getFilteredEvents() {
       let filtered = events;
 
       if (currentFilter.type === 'macro') {
         filtered = events.filter(ev => ev.macro === currentFilter.value);
       } else if (currentFilter.type === 'sub') {
         const subValue = currentFilter.value;
-        // Handle grouped items and children
         let allowedSubs = [subValue];
         if (subValue === '7B/7C/7D') allowedSubs = ['WP7B', 'WP7C', 'WP7D', '7B/7C/7D'];
         if (['CITEL','CEPT','ATU','APT'].includes(subValue)) {
-          // For parent groups, include their children from hierarchy
           const parentGroup = Object.values(hierarchy).find(m => m["Regional Preparation"] && m["Regional Preparation"][subValue]);
           if (parentGroup) {
             allowedSubs = [subValue, ...(parentGroup["Regional Preparation"][subValue] || [])];
@@ -1182,6 +1262,41 @@
           ev.macro === currentFilter.macro && subsInSection.includes(ev.sub)
         );
       }
+
+      return filtered;
+    }
+
+    function switchToTimelineView() {
+      document.getElementById('timeline-content').classList.remove('hidden');
+      document.getElementById('tasks-content').classList.add('hidden');
+
+      // Highlight active tab
+      document.getElementById('tab-timeline').classList.add('bg-white', 'text-black', 'font-medium');
+      document.getElementById('tab-tasks').classList.remove('bg-white', 'text-black', 'font-medium');
+
+      // Show filters again
+      document.getElementById('timeline-filters').classList.remove('hidden');
+    }
+
+    function switchToTasksView() {
+      document.getElementById('timeline-content').classList.add('hidden');
+      document.getElementById('tasks-content').classList.remove('hidden');
+
+      // Highlight active tab
+      document.getElementById('tab-timeline').classList.remove('bg-white', 'text-black', 'font-medium');
+      document.getElementById('tab-tasks').classList.add('bg-white', 'text-black', 'font-medium');
+
+      // Hide time filters when in Tasks view
+      document.getElementById('timeline-filters').classList.add('hidden');
+
+      renderTasksView();
+    }
+
+    function renderEventsList() {
+      const container = document.getElementById('events-list');
+      if (!container) return;
+
+      const filtered = getFilteredEvents();
 
       if (filtered.length === 0) {
         container.innerHTML = `<p class="text-gray-500 col-span-2 py-8 text-center">No events match the current filter.</p>`;
@@ -1199,10 +1314,121 @@
       `).join('');
     }
 
+    let currentTaskOwnerFilter = null; // null = show all owners
+
+    function renderTasksView() {
+      const container = document.getElementById('tasks-list-content');
+      if (!container) return;
+
+      // Collect ALL tasks first (unfiltered)
+      let allTasks = [];
+      events.forEach(ev => {
+        if (ev.tasks && ev.tasks.length > 0) {
+          ev.tasks.forEach((task, index) => {
+            allTasks.push({
+              ...task,
+              parentEventId: ev.id,
+              parentEventTitle: ev.title,
+              parentMacro: ev.macro,
+              taskIndex: index
+            });
+          });
+        }
+      });
+
+      // Build unique owners from the FULL list (so chips are always available)
+      const uniqueOwners = [...new Set(allTasks.map(t => t.owner).filter(Boolean))];
+
+      // Apply filter AFTER collecting unique owners
+      let filteredTasks = allTasks;
+      if (currentTaskOwnerFilter) {
+        filteredTasks = allTasks.filter(t => t.owner === currentTaskOwnerFilter);
+      }
+
+      if (filteredTasks.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-2 py-8 text-center text-gray-500">
+            <i class="fas fa-tasks text-3xl mb-3 block"></i>
+            <p class="text-sm">No tasks found${currentTaskOwnerFilter ? ` for ${currentTaskOwnerFilter}` : ''}.</p>
+          </div>
+        `;
+        return;
+      }
+
+      let html = '';
+
+      // Always show filter chips if there is at least one owner
+      if (uniqueOwners.length > 0) {
+        html += `<div class="flex flex-wrap gap-2 mb-4">`;
+        
+        // "All" chip
+        html += `<span onclick="filterTasksByOwner(null)" 
+                      class="cursor-pointer px-3 py-1 text-xs rounded-full transition-colors ${!currentTaskOwnerFilter ? 'bg-white text-black font-medium' : 'bg-gray-700 hover:bg-gray-600'}">All</span>`;
+        
+        uniqueOwners.forEach(owner => {
+          const color = getOwnerColor(owner);
+          const isActive = currentTaskOwnerFilter === owner;
+          html += `<span onclick="filterTasksByOwner('${owner}')" 
+                        class="cursor-pointer px-3 py-1 text-xs text-white rounded-full transition-all" 
+                        style="background-color: ${isActive ? color : '#374151'}">${owner}</span>`;
+        });
+        html += `</div>`;
+      }
+
+      html += filteredTasks.map(task => {
+        const ownerColor = task.owner ? getOwnerColor(task.owner) : '#64748b';
+        return `
+          <div onclick="openDetailModal(${task.parentEventId})" 
+               class="cursor-pointer bg-gray-800/70 hover:bg-gray-700/70 rounded-2xl p-4 border-l-4 transition-all text-sm"
+               style="border-color: ${colors[task.parentMacro] || '#64748b'}">
+            <div class="flex items-start gap-3">
+              <input type="checkbox" ${task.done ? 'checked' : ''} 
+                     onchange="event.stopImmediatePropagation(); toggleTaskFromView(${task.parentEventId}, ${task.taskIndex}, this)"
+                     class="mt-0.5">
+              <div class="flex-1 min-w-0">
+                <div class="font-medium leading-tight ${task.done ? 'line-through text-gray-500' : ''}">
+                  ${task.text}
+                </div>
+                <div class="flex items-center gap-2 mt-1.5">
+                  <div class="text-[10px] text-gray-400 truncate">
+                    ${task.parentEventTitle}
+                  </div>
+                  ${task.owner ? `<span class="px-2 py-0.5 text-[10px] text-white rounded-full" style="background-color: ${ownerColor}">${task.owner}</span>` : ''}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      container.innerHTML = html;
+    }
+
+    function filterTasksByOwner(owner) {
+      currentTaskOwnerFilter = (currentTaskOwnerFilter === owner) ? null : owner;
+      renderTasksView();
+    }
+
+    // Allow toggling task status directly from the Tasks view
+    function toggleTaskFromView(eventId, taskIndex, checkbox) {
+      event.stopImmediatePropagation();
+
+      const ev = events.find(e => e.id === eventId);
+      if (!ev || !ev.tasks[taskIndex]) return;
+
+      ev.tasks[taskIndex].done = checkbox.checked;
+      saveToLocal();
+
+      // Refresh the tasks view
+      if (currentMissionView === 'tasks') {
+        renderTasksView();
+      }
+    }
+
     function renderAll() {
       renderCategoryTree();
-      renderEventsList();
       renderGanttChart();
+      renderEventsList();
     }
 
     function filterByMacro(macro) {
@@ -1290,14 +1516,32 @@
     // Initialize
     async function init() {
       await loadData();
+
+      // TEMP: Assign "Eric" as owner to all tasks that don't have one yet
+      events.forEach(ev => {
+        if (ev.tasks && Array.isArray(ev.tasks)) {
+          ev.tasks.forEach(task => {
+            if (!task.owner) task.owner = "Eric";
+          });
+        }
+      });
+      saveToLocal();
+
       loadBackground();
       loadHashtags();
       renderAll();
+      renderTasksView();
       
       // Set default active button (1 month)
       const defaultBtn = document.getElementById('btn-30');
       if (defaultBtn) {
         defaultBtn.classList.add('bg-white', 'text-black', 'font-semibold');
+      }
+
+      // Set default active tab to Timeline
+      const timelineTab = document.getElementById('tab-timeline');
+      if (timelineTab) {
+        timelineTab.classList.add('bg-white', 'text-black', 'font-medium');
       }
     }
 
