@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-05T17:38:00Z",
+  "lastUpdated": "2026-06-06T13:09:56Z",
   "events": [
     {
       "id": 1780593493609,
@@ -9,16 +9,43 @@
       "endDate": "2026-10-29",
       "macro": "WRC27",
       "sub": "WP4A",
-      "assignees": ["Udri", "Madeleine", "Zahid", "Eric", "Rohit"],
+      "assignees": [
+        "Udri",
+        "Madeleine",
+        "Zahid",
+        "Eric",
+        "Rohit"
+      ],
       "tasks": [],
       "deadlines": [
-        {"title": "Factsheets due", "date": "2026-06-22"},
-        {"title": "First Drafts", "date": "2026-07-06"},
-        {"title": "Final drafts", "date": "2026-08-10"},
-        {"title": "Comments on final drafts", "date": "2026-08-17"},
-        {"title": "National Committee begins", "date": "2026-09-04"},
-        {"title": "Reconciliation begins", "date": "2026-09-22"},
-        {"title": "Submissions to GVA", "date": "2026-10-07"}
+        {
+          "title": "Factsheets due",
+          "date": "2026-06-22"
+        },
+        {
+          "title": "First Drafts",
+          "date": "2026-07-06"
+        },
+        {
+          "title": "Final drafts",
+          "date": "2026-08-10"
+        },
+        {
+          "title": "Comments on final drafts",
+          "date": "2026-08-17"
+        },
+        {
+          "title": "National Committee begins",
+          "date": "2026-09-04"
+        },
+        {
+          "title": "Reconciliation begins",
+          "date": "2026-09-22"
+        },
+        {
+          "title": "Submissions to GVA",
+          "date": "2026-10-07"
+        }
       ]
     },
     {
@@ -29,25 +56,84 @@
       "endDate": "2026-10-16",
       "macro": "WRC27",
       "sub": "WP4C",
-      "assignees": ["Udri", "Madeleine", "Eric", "Zahid", "Joe", "Rohit"],
+      "assignees": [
+        "Udri",
+        "Madeleine",
+        "Eric",
+        "Zahid",
+        "Joe",
+        "Rohit"
+      ],
       "tasks": [
-        {"text": "CPM 1.13", "done": false, "owner": "Udri"},
-        {"text": "MSS sat pattern", "done": false, "owner": "Eric"},
-        {"text": "Sharing AMS", "done": false, "owner": "Eric"},
-        {"text": "Sharing AMT", "done": false, "owner": "Eric"},
-        {"text": "Sharing FS", "done": false, "owner": "Eric"},
-        {"text": "Sharing legacy MSS", "done": false, "owner": "Eric"},
-        {"text": "Sharing Metsat", "done": false, "owner": "Eric"}
+        {
+          "text": "CPM 1.13",
+          "done": false,
+          "owner": "Udri"
+        },
+        {
+          "text": "MSS sat pattern",
+          "done": false,
+          "owner": "Eric"
+        },
+        {
+          "text": "Sharing AMS",
+          "done": false,
+          "owner": "Eric"
+        },
+        {
+          "text": "Sharing AMT",
+          "done": false,
+          "owner": "Eric"
+        },
+        {
+          "text": "Sharing FS",
+          "done": false,
+          "owner": "Eric"
+        },
+        {
+          "text": "Sharing legacy MSS",
+          "done": false,
+          "owner": "Eric"
+        },
+        {
+          "text": "Sharing Metsat",
+          "done": false,
+          "owner": "Eric"
+        }
       ],
       "deadlines": [
-        {"title": "Factsheets due", "date": "2026-06-02"},
-        {"title": "First drafts", "date": "2026-06-12"},
-        {"title": "Final drafts", "date": "2026-07-17"},
-        {"title": "Comments on final drafts", "date": "2026-07-31"},
-        {"title": "NC versions to Kathyrn", "date": "2026-08-21"},
-        {"title": "NC begins", "date": "2026-08-26"},
-        {"title": "Reconciliation begins", "date": "2026-09-11"},
-        {"title": "Docs to GVA", "date": "2026-09-25"}
+        {
+          "title": "Factsheets due",
+          "date": "2026-06-02"
+        },
+        {
+          "title": "First drafts",
+          "date": "2026-06-12"
+        },
+        {
+          "title": "Final drafts",
+          "date": "2026-07-17"
+        },
+        {
+          "title": "Comments on final drafts",
+          "date": "2026-07-31"
+        },
+        {
+          "title": "NC versions to Kathyrn",
+          "date": "2026-08-21"
+        },
+        {
+          "title": "NC begins",
+          "date": "2026-08-26"
+        },
+        {
+          "title": "Reconciliation begins",
+          "date": "2026-09-11"
+        },
+        {
+          "title": "Docs to GVA",
+          "date": "2026-09-25"
+        }
       ]
     },
     {
@@ -58,12 +144,41 @@
       "endDate": "2026-10-08",
       "macro": "WRC27",
       "sub": "WP5D",
-      "assignees": ["Udri", "Madeleine", "Joe", "Zahid", "Eric", "Rohit", "Anton"],
-      "tasks": [
-        {"text": "1.13 CPM", "done": false, "owner": "Udri, Joe"},
-        {"text": "1.7: 7 GHz deep space", "done": false, "owner": "Anton, Madeleine"}
+      "assignees": [
+        "Udri",
+        "Madeleine",
+        "Joe",
+        "Zahid",
+        "Eric",
+        "Rohit",
+        "Anton"
       ],
-      "deadlines": []
+      "tasks": [
+        {
+          "text": "1.13 CPM",
+          "done": false,
+          "owner": "Udri, Joe"
+        },
+        {
+          "text": "1.7: 7 GHz deep space",
+          "done": false,
+          "owner": "Anton, Madeleine"
+        }
+      ],
+      "deadlines": [
+        {
+          "title": "First drafts due",
+          "date": "2026-07-06"
+        },
+        {
+          "title": "Second drafts due",
+          "date": "2026-07-31"
+        },
+        {
+          "title": "Final drafts due",
+          "date": "2026-08-14"
+        }
+      ]
     },
     {
       "id": 1780598155204,
@@ -73,10 +188,22 @@
       "endDate": "2026-11-27",
       "macro": "WRC27",
       "sub": "WP5C",
-      "assignees": ["Udri", "Zahid", "Rohit"],
+      "assignees": [
+        "Udri",
+        "Zahid",
+        "Rohit"
+      ],
       "tasks": [
-        {"text": "Studies modernization F.758", "done": false, "owner": "Rohit"},
-        {"text": "Add study 1.10 similar to CEPT show protection 10 deg", "done": false, "owner": "Zahid"}
+        {
+          "text": "Studies modernization F.758",
+          "done": false,
+          "owner": "Rohit"
+        },
+        {
+          "text": "Add study 1.10 similar to CEPT show protection 10 deg",
+          "done": false,
+          "owner": "Zahid"
+        }
       ],
       "deadlines": []
     },
@@ -88,12 +215,36 @@
       "endDate": "2026-09-24",
       "macro": "WRC27",
       "sub": "7B/7C/7D",
-      "assignees": ["Udri", "Madeleine", "Joe", "Zahid", "Eric", "Nader", "Rohit"],
+      "assignees": [
+        "Udri",
+        "Madeleine",
+        "Joe",
+        "Zahid",
+        "Eric",
+        "Nader",
+        "Rohit"
+      ],
       "tasks": [
-        {"text": "1.18 CPM", "done": false, "owner": "Joe"},
-        {"text": "Info doc RS.2017 RS.1861", "done": false, "owner": "Joe, Nader"},
-        {"text": "1.16 studies with NASA", "done": false, "owner": "Chris"},
-        {"text": "1.15 CPM", "done": false, "owner": "Madeleine, Anton"}
+        {
+          "text": "1.18 CPM",
+          "done": false,
+          "owner": "Joe"
+        },
+        {
+          "text": "Info doc RS.2017 RS.1861",
+          "done": false,
+          "owner": "Joe, Nader"
+        },
+        {
+          "text": "1.16 studies with NASA",
+          "done": false,
+          "owner": "Chris"
+        },
+        {
+          "text": "1.15 CPM",
+          "done": false,
+          "owner": "Madeleine, Anton"
+        }
       ],
       "deadlines": []
     },
@@ -105,7 +256,10 @@
       "endDate": "2026-12-04",
       "macro": "WRC27",
       "sub": "PCC.II",
-      "assignees": ["Udri", "Madeleine"],
+      "assignees": [
+        "Udri",
+        "Madeleine"
+      ],
       "tasks": [],
       "deadlines": []
     },
@@ -117,7 +271,9 @@
       "endDate": "2026-08-28",
       "macro": "WRC27",
       "sub": "PTA",
-      "assignees": ["Udri"],
+      "assignees": [
+        "Udri"
+      ],
       "tasks": [],
       "deadlines": []
     },
@@ -129,7 +285,9 @@
       "endDate": "2026-09-18",
       "macro": "WRC27",
       "sub": "PTB",
-      "assignees": ["Udri"],
+      "assignees": [
+        "Udri"
+      ],
       "tasks": [],
       "deadlines": []
     },
@@ -141,7 +299,9 @@
       "endDate": "2026-09-25",
       "macro": "WRC27",
       "sub": "PTC",
-      "assignees": ["Udri"],
+      "assignees": [
+        "Udri"
+      ],
       "tasks": [],
       "deadlines": []
     },
@@ -153,7 +313,9 @@
       "endDate": "2026-09-11",
       "macro": "WRC27",
       "sub": "PT1",
-      "assignees": ["Udri"],
+      "assignees": [
+        "Udri"
+      ],
       "tasks": [],
       "deadlines": []
     },
@@ -165,7 +327,9 @@
       "endDate": "2026-09-04",
       "macro": "WRC27",
       "sub": "FM44",
-      "assignees": ["Udri"],
+      "assignees": [
+        "Udri"
+      ],
       "tasks": [],
       "deadlines": []
     },
@@ -177,14 +341,31 @@
       "endDate": "2026-07-17",
       "macro": "WRC27",
       "sub": "SE 40",
-      "assignees": ["Udri"],
+      "assignees": [
+        "Udri"
+      ],
       "tasks": [],
       "deadlines": [
-        {"title": "CG2 submission deadline", "date": "2026-06-09"},
-        {"title": "CG2 meeting", "date": "2026-06-15"},
-        {"title": "CG1 submission deadline", "date": "2026-06-19"},
-        {"title": "CG1 meeting", "date": "2026-06-25"},
-        {"title": "SE 40 submission deadline", "date": "2026-07-08"}
+        {
+          "title": "CG2 submission deadline",
+          "date": "2026-06-09"
+        },
+        {
+          "title": "CG2 meeting",
+          "date": "2026-06-15"
+        },
+        {
+          "title": "CG1 submission deadline",
+          "date": "2026-06-19"
+        },
+        {
+          "title": "CG1 meeting",
+          "date": "2026-06-25"
+        },
+        {
+          "title": "SE 40 submission deadline",
+          "date": "2026-07-08"
+        }
       ]
     },
     {
@@ -195,7 +376,10 @@
       "endDate": "2026-06-19",
       "macro": "WRC27",
       "sub": "ECOWAS",
-      "assignees": ["Udri", "Kamal"],
+      "assignees": [
+        "Udri",
+        "Kamal"
+      ],
       "tasks": [],
       "deadlines": []
     },
@@ -207,7 +391,10 @@
       "endDate": "2026-09-11",
       "macro": "WRC27",
       "sub": "ATU",
-      "assignees": ["Udri", "Kamal"],
+      "assignees": [
+        "Udri",
+        "Kamal"
+      ],
       "tasks": [],
       "deadlines": []
     },
@@ -219,7 +406,9 @@
       "endDate": "2026-08-28",
       "macro": "WRC27",
       "sub": "APG",
-      "assignees": ["Udri"],
+      "assignees": [
+        "Udri"
+      ],
       "tasks": [],
       "deadlines": []
     },
@@ -231,7 +420,10 @@
       "endDate": "2026-11-27",
       "macro": "PleniPot26",
       "sub": "",
-      "assignees": ["Udri", "Madeleine"],
+      "assignees": [
+        "Udri",
+        "Madeleine"
+      ],
       "tasks": [],
       "deadlines": []
     },
@@ -243,15 +435,36 @@
       "endDate": "2026-08-04",
       "macro": "WRC27",
       "sub": "WAC",
-      "assignees": ["Udri", "Madeleine"],
+      "assignees": [
+        "Udri",
+        "Madeleine"
+      ],
       "tasks": [],
       "deadlines": [
-        {"title": "IWG-2", "date": "2026-06-30"},
-        {"title": "IWG-3 and IWG-4", "date": "2026-07-01"},
-        {"title": "Prep docs IWGs", "date": "2026-06-23"},
-        {"title": "IWG-2", "date": "2026-07-28"},
-        {"title": "IWG-3 and IWG-4", "date": "2026-07-29"},
-        {"title": "Prep docs IWGs", "date": "2026-07-20"}
+        {
+          "title": "IWG-2",
+          "date": "2026-06-30"
+        },
+        {
+          "title": "IWG-3 and IWG-4",
+          "date": "2026-07-01"
+        },
+        {
+          "title": "Prep docs IWGs",
+          "date": "2026-06-23"
+        },
+        {
+          "title": "IWG-2",
+          "date": "2026-07-28"
+        },
+        {
+          "title": "IWG-3 and IWG-4",
+          "date": "2026-07-29"
+        },
+        {
+          "title": "Prep docs IWGs",
+          "date": "2026-07-20"
+        }
       ]
     },
     {
@@ -262,15 +475,36 @@
       "endDate": "2026-09-25",
       "macro": "WRC27",
       "sub": "WAC",
-      "assignees": ["Udri", "Madeleine"],
+      "assignees": [
+        "Udri",
+        "Madeleine"
+      ],
       "tasks": [],
       "deadlines": [
-        {"title": "IWG-2", "date": "2026-09-15"},
-        {"title": "IWG-3 and IWG-4", "date": "2026-09-16"},
-        {"title": "Prep IWGs", "date": "2026-09-06"},
-        {"title": "IWG-2", "date": "2026-08-25"},
-        {"title": "IWG-3 and IWG-4", "date": "2026-08-26"},
-        {"title": "Prep docs IWGs", "date": "2026-08-18"}
+        {
+          "title": "IWG-2",
+          "date": "2026-09-15"
+        },
+        {
+          "title": "IWG-3 and IWG-4",
+          "date": "2026-09-16"
+        },
+        {
+          "title": "Prep IWGs",
+          "date": "2026-09-06"
+        },
+        {
+          "title": "IWG-2",
+          "date": "2026-08-25"
+        },
+        {
+          "title": "IWG-3 and IWG-4",
+          "date": "2026-08-26"
+        },
+        {
+          "title": "Prep docs IWGs",
+          "date": "2026-08-18"
+        }
       ]
     },
     {
@@ -281,7 +515,11 @@
       "endDate": "2026-07-24",
       "macro": "PleniPot26",
       "sub": "ATU",
-      "assignees": ["Udri", "Madeleine", "Kamal"],
+      "assignees": [
+        "Udri",
+        "Madeleine",
+        "Kamal"
+      ],
       "tasks": [],
       "deadlines": []
     },
@@ -293,7 +531,9 @@
       "endDate": "2026-08-28",
       "macro": "PleniPot26",
       "sub": "APT",
-      "assignees": ["Udri"],
+      "assignees": [
+        "Udri"
+      ],
       "tasks": [],
       "deadlines": []
     },
@@ -305,7 +545,10 @@
       "endDate": "2026-07-10",
       "macro": "WRC27",
       "sub": "WP4A",
-      "assignees": ["Udri", "Madeleine"],
+      "assignees": [
+        "Udri",
+        "Madeleine"
+      ],
       "tasks": [],
       "deadlines": []
     },
@@ -317,7 +560,11 @@
       "endDate": "2026-07-10",
       "macro": "WRC27",
       "sub": "WP4C",
-      "assignees": ["Udri", "Madeleine", "Eric"],
+      "assignees": [
+        "Udri",
+        "Madeleine",
+        "Eric"
+      ],
       "tasks": [],
       "deadlines": []
     },
@@ -329,7 +576,11 @@
       "endDate": "2026-06-30",
       "macro": "WRC27",
       "sub": "WP4A",
-      "assignees": ["Udri", "Eric", "Madeleine"],
+      "assignees": [
+        "Udri",
+        "Eric",
+        "Madeleine"
+      ],
       "tasks": [],
       "deadlines": []
     }
