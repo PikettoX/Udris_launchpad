@@ -1222,10 +1222,23 @@
     function renderDeadlines() {
       const ev = events.find(e => e.id === currentEventId);
       const container = document.getElementById('deadlines-list');
-      container.innerHTML = ev.deadlines.map(dl => `
-        <div class="bg-gray-800/70 rounded-2xl p-4 flex justify-between items-center">
-          <div><span class="text-rose-400">●</span> ${dl.title}</div>
-          <div class="text-sm text-gray-400">${dl.date}</div>
+      container.innerHTML = ev.deadlines.map((dl, i) => `
+        <div class="bg-gray-800/70 rounded-2xl p-4 flex justify-between items-center group">
+          <div class="flex-1">
+            <div><span class="text-rose-400">●</span> ${dl.title}</div>
+            <div class="text-sm text-gray-400">${dl.date}</div>
+          </div>
+          
+          <div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+            <button onclick="event.stopImmediatePropagation(); editDeadline(${i})" 
+                    class="text-gray-400 hover:text-white px-2 py-1 text-sm">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button onclick="event.stopImmediatePropagation(); deleteDeadline(${i})" 
+                    class="text-gray-400 hover:text-red-400 px-2 py-1 text-sm">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
         </div>
       `).join('');
     }
@@ -1257,6 +1270,38 @@
       saveToLocal();
       renderDeadlines();
       document.getElementById('new-deadline-title').value = '';
+    }
+
+    function editDeadline(index) {
+      const ev = events.find(e => e.id === currentEventId);
+      if (!ev || !ev.deadlines[index]) return;
+
+      const current = ev.deadlines[index];
+
+      const newTitle = prompt("Edit deadline title:", current.title);
+      if (newTitle === null) return; // user cancelled
+
+      const newDate = prompt("Edit deadline date (YYYY-MM-DD):", current.date);
+      if (newDate === null) return;
+
+      ev.deadlines[index] = {
+        title: newTitle.trim() || current.title,
+        date: newDate.trim() || current.date
+      };
+
+      saveToLocal();
+      renderDeadlines();
+    }
+
+    function deleteDeadline(index) {
+      if (!confirm("Delete this deadline?")) return;
+
+      const ev = events.find(e => e.id === currentEventId);
+      if (!ev) return;
+
+      ev.deadlines.splice(index, 1);
+      saveToLocal();
+      renderDeadlines();
     }
 
     function closeDetailModal() {
